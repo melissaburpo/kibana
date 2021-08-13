@@ -31,3 +31,9 @@ echo "$TEMPLATE"
 
 echo '--- Deploy yaml'
 echo "$TEMPLATE" | kubectl apply -f -
+
+cat << EOF | buildkite-agent annotate --style "info" --context demo-env-info
+The demo environment can be accessed here:
+
+https://$DEPLOYMENT_NAME.demo.kibana.dev
+EOF
