@@ -2,7 +2,5 @@ steps:
   - command: .buildkite/scripts/steps/demo_env/init.sh
     label: Initialize Environment and Deploy ES
 
-  - wait
-
   - command: .buildkite/scripts/steps/demo_env/kibana.sh
-    label: Deploy Kibana
+    label: Build and Deploy Kibana
