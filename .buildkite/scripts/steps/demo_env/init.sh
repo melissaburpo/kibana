@@ -6,10 +6,15 @@ source "$(dirname "${0}")/config.sh"
 
 "$(dirname "${0}")/auth.sh"
 
-echo '--- Prepare yaml'
+echo '--- Import and publish Elasticsearch image'
 
-# TODO
-export ES_IMAGE="docker.elastic.co/elasticsearch/elasticsearch:8.0.0-alpha1-amd64"
+export ES_IMAGE="gcr.io/elastic-kibana-184716/demo/elasticsearch:$DEPLOYMENT_NAME-$(git rev-parse HEAD)"
+
+DOCKER_EXPORT_URL=$(curl https://storage.googleapis.com/kibana-ci-es-snapshots-daily/$DEPLOYMENT_VERSION/manifest-latest-verified.json | jq -r '.archives | .[] | select(.platform=="docker") | .url')
+docker import "$DOCKER_EXPORT_URL" "$ES_IMAGE"
+docker push "$ES_IMAGE"
+
+echo '--- Prepare yaml'
 
 TEMPLATE=$(envsubst < "$(dirname "${0}")/init.yml")
 
