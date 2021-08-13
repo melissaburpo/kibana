@@ -20,6 +20,7 @@ spec:
       anonymous.anonymous1:
         order: 1
         credentials: 'elasticsearch_anonymous_user'
+    server.publicBaseUrl: 'https://$DEPLOYMENT_NAME.demo.kibana.dev'
   podTemplate:
     spec:
       containers:
